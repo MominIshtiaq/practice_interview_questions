@@ -147,7 +147,7 @@ var rotateLeftByOne03 = function (arr) {
 };
 // let array03 = [1, 2, 3, 4, 5];
 // console.log(rotateLeftByOne03(array03));
-var rotateElement_K_Times = function (arr, k, direct) {
+var rotateElement_K_Times01 = function (arr, k, direct) {
     if (direct === "left") {
         k = Math.floor(k % arr.length);
         while (k > 0) {
@@ -176,5 +176,80 @@ var rotateElement_K_Times = function (arr, k, direct) {
         throw new Error("Direction to rotate the array is wrong");
     }
 };
-var arr = [3, 7, 8, 9, 10, 11];
-console.log(rotateElement_K_Times(arr, 3, "right"));
+// let arr = [3, 7, 8, 9, 10, 11];
+// console.log(rotateElement_K_Times01(arr, 3, "right"));
+var rotateElement_K_Times02 = function (arr, k, direct) {
+    if (arr.length === 0)
+        return "Array is empty";
+    var n = arr.length;
+    if ((direct = "left")) {
+        k = Math.floor(k % n);
+        if (k > n)
+            return;
+        var temp = Array(k);
+        for (var i = 0; i < k; i++) {
+            temp[i] = arr[i];
+        }
+        for (var i = 0; i < n - k; i++) {
+            arr[i] = arr[i + k];
+        }
+        for (var i = n - k; i < n; i++) {
+            arr[i] = temp[i - n + k];
+        }
+        return arr;
+    }
+    else if ((direct = "right")) {
+        k = Math.floor(k % n);
+        if (k > n)
+            return;
+        var temp = Array(k);
+        for (var i = n - k; i < n; i++) {
+            temp[i - n + k] = arr[i];
+        }
+        for (var i = n - k - 1; i >= 0; i--) {
+            arr[i + k] = arr[i];
+        }
+        for (var i = 0; i < k; i++) {
+            arr[i] = temp[i];
+        }
+        return arr;
+    }
+    else {
+        throw new Error("direction to rotate the array is wrong");
+    }
+};
+var rotateElement_K_Times03 = function (arr, k, direct) {
+    if (arr.length === 0)
+        return;
+    var n = arr.length;
+    function reverse(array, start, end) {
+        if (start >= end)
+            return;
+        while (start <= end) {
+            var temp = array[start];
+            array[start] = array[end];
+            array[end] = temp;
+            start++;
+            end--;
+        }
+        return array;
+    }
+    if ((direct = "left")) {
+        reverse(arr, 0, k - 1);
+        reverse(arr, k, n - 1);
+        reverse(arr, 0, n - 1);
+        return arr;
+    }
+    else if ((direct = "right")) {
+        reverse(arr, 0, n - k - 1);
+        reverse(arr, n - k, n - 1);
+        reverse(arr, 0, n - 1);
+        return arr;
+    }
+    else {
+        throw new Error("Direction to rotate array is wrong");
+    }
+};
+// let arr = [1, 2, 3, 4, 5];
+// console.log(rotateElement_K_Times01(arr, 2, "left"));
+//console.log(rotateElement_K_Times01(arr, 2, "left"));
